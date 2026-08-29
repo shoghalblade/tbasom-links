@@ -32,13 +32,12 @@ body::before{
   pointer-events:none;z-index:0;
 }
 
-.header{text-align:center;margin:40px 0 10px;position:relative;z-index:1;perspective:600px}.header 
-
-
-
-
+.header{text-align:center;margin:40px 0 10px;position:relative;z-index:1;perspective:800px}
 .header h1{font-size:1.4rem;font-weight:700;color:var(--gold);margin-bottom:4px}
 .header p{font-size:.85rem;color:var(--text-muted)}
+
+.logo{width:120px;height:auto;display:block;margin:0 auto 16px;animation:spin3d 10s ease-in-out infinite;transform-style:preserve-3d;transform-origin:center center}
+@keyframes spin3d{from{transform:rotateY(0deg)}to{transform:rotateY(360deg)}}
 
 .section-title{
   max-width:420px;width:100%;margin:28px 0 12px;
@@ -47,7 +46,6 @@ body::before{
 }
 .section-title::before,.section-title::after{content:'';flex:1;height:1px;background:linear-gradient(to right,transparent,rgba(200,168,78,.3))}
 .section-title::after{background:linear-gradient(to left,transparent,rgba(200,168,78,.3))}
-
 
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:420px;width:100%;position:relative;z-index:1}
 
@@ -70,17 +68,6 @@ body::before{
 .card .label{font-size:.82rem;font-weight:600;text-align:center;line-height:1.4}
 .card .sub{font-size:.68rem;color:var(--text-muted);text-align:center;margin-top:-4px}
 
-.phone-row{max-width:420px;width:100%;margin-top:14px;display:flex;gap:10px;position:relative;z-index:1}
-.phone-btn{
-  flex:1;display:flex;align-items:center;justify-content:center;gap:8px;
-  padding:14px 12px;background:var(--bg-card);
-  border:1px solid rgba(200,168,78,.15);border-radius:var(--radius-sm);
-  text-decoration:none;color:var(--text);font-family:inherit;font-size:.82rem;
-  font-weight:600;cursor:pointer;transition:all .25s;
-}
-.phone-btn:hover{background:var(--bg-card-hover);border-color:rgba(200,168,78,.35)}
-.phone-btn svg{width:20px;height:20px;stroke:var(--gold);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-
 .address-bar{
   max-width:420px;width:100%;margin-top:14px;padding:16px 20px;
   background:var(--bg-card);border:1px solid rgba(200,168,78,.15);border-radius:var(--radius);
@@ -90,7 +77,6 @@ body::before{
 .address-bar .addr-text{font-size:.82rem;line-height:1.7;color:var(--text-muted)}
 .address-bar .addr-text strong{color:var(--text);font-weight:600}
 
-/* ── doctor (simple, bottom) ── */
 .doctor{
   max-width:420px;width:100%;margin-top:30px;
   display:flex;align-items:center;gap:20px;
@@ -98,24 +84,14 @@ body::before{
   border:1px solid rgba(200,168,78,.15);border-radius:var(--radius);
   position:relative;z-index:1;
 }
-.doctor-photo{
-  width:80px;height:80px;border-radius:50%;object-fit:cover;
-  border:2px solid var(--gold);flex-shrink:0;
-}
+.doctor-photo{width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);flex-shrink:0}
 .doctor-info{display:flex;flex-direction:column;gap:4px}
 .doctor-name{font-size:.95rem;font-weight:700;color:var(--gold)}
 .doctor-desc{font-size:.78rem;color:var(--text-muted);line-height:1.7}
 
-
-
-
-to{transform:rotateY(360deg)}}
-.logo{width:120px;height:auto;display:block;margin:0 auto 16px;animation:spin3d 10s ease-in-out infinite;transform-style:preserve-3d;transform-origin:center center}
-@keyframes spin3d{from{transform:rotateY(0deg)}to{transform:rotateY(360deg)}}
 .footer{margin-top:40px;text-align:center;font-size:.7rem;color:var(--text-muted);position:relative;z-index:1}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-to{transform:rotateY(360deg)}}
 .animate{animation:fadeUp .5s ease both}
 .delay-1{animation-delay:.05s}.delay-2{animation-delay:.1s}.delay-3{animation-delay:.15s}
 .delay-4{animation-delay:.2s}.delay-5{animation-delay:.25s}.delay-6{animation-delay:.3s}
@@ -125,11 +101,8 @@ to{transform:rotateY(360deg)}}
 <body>
 
 <div class="header animate">
-  <div class="logo-wrap-3d">
-    <img src="logo-tabasom.png" alt="لوگو تبسم" class="logo" onerror="this.style.display='none'">
-  </div>
+  <img src="logo-tabasom.png" alt="لوگو تبسم" class="logo" onerror="this.style.display='none'">
   <h1>دندانپزشکی تبسم</h1>
-  
 </div>
 
 <div class="section-title animate delay-1">تماس و پیام‌رسان</div>
@@ -189,7 +162,6 @@ to{transform:rotateY(360deg)}}
   <div class="addr-text"><strong>آدرس:</strong> تهران، شهر زیبا، بلوار جوانمردان، ساختمان نوبهار، طبقه هفتم</div>
 </div>
 
-<!-- ═══ دکتر ═══ -->
 <div class="doctor animate delay-8">
   <img src="doctor-photo.webp" alt="دکتر بخشیان" class="doctor-photo" onerror="this.style.display='none'">
   <div class="doctor-info">
@@ -198,7 +170,7 @@ to{transform:rotateY(360deg)}}
   </div>
 </div>
 
-<div class="footer animate delay-8">دندانپزشکی تبسم · شهر زیبا · غرب تهران</div>
+<div class="footer animate delay-8">دندانپزشکی تبسم</div>
 
 </body>
 </html>
