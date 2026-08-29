@@ -108,7 +108,9 @@ to{transform:rotateY(360deg)}}
 .doctor-desc{font-size:.78rem;color:var(--text-muted);line-height:1.7}
 
 .logo-wrap-3d{perspective:800px;display:block;width:180px;margin:0 auto}
-.logo{width:180px;height:auto;display:block;animation:spin 8s linear infinite;transform-style:preserve-3d}
+.coin{transform-style:preserve-3d;animation:spin 8s linear infinite;width:180px;height:180px;position:relative}
+.logo{width:180px;height:180px;display:block;position:absolute;top:0;left:0}
+.logo-layer{width:180px;height:180px;display:block;position:absolute;top:0;left:0;opacity:.9}
 @keyframes spin{from{transform:rotateY(0deg)}to{transform:rotateY(360deg)}}
 .footer{margin-top:40px;text-align:center;font-size:.7rem;color:var(--text-muted);position:relative;z-index:1}
 
@@ -123,7 +125,17 @@ to{transform:rotateY(360deg)}}
 <body>
 
 <div class="header animate">
-  <div class="logo-wrap-3d"><img src="logo-tabasom.png" alt="لوگو تبسم" class="logo" onerror="this.style.display='none'"></div>
+  <div class="logo-wrap-3d">
+    <div class="coin">
+      <img src="logo-tabasom.png" alt="لوگو تبسم" class="logo" onerror="this.style.display='none'">
+      <img src="logo-tabasom.png" class="logo-layer" style="transform:translateZ(2px)">
+      <img src="logo-tabasom.png" class="logo-layer" style="transform:translateZ(4px)">
+      <img src="logo-tabasom.png" class="logo-layer" style="transform:translateZ(6px)">
+      <img src="logo-tabasom.png" class="logo-layer" style="transform:translateZ(8px)">
+      <img src="logo-tabasom.png" class="logo-layer" style="transform:translateZ(10px)">
+      <img src="logo-tabasom.png" class="logo-layer" style="transform:translateZ(12px)">
+    </div>
+  </div>
   <h1>دندانپزشکی تبسم</h1>
   
 </div>
