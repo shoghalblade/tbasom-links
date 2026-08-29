@@ -37,7 +37,7 @@ body::before{
 
 /* ── 3D Logo ── */
 .logo-container{
-  width:150px;height:150px;margin:0 auto 16px;
+  width:80px;height:80px;margin:0 auto 16px;
   perspective:600px;position:relative;
 }
 .logo-coin{width:100%;height:100%;position:relative;transform-style:preserve-3d}
@@ -107,7 +107,7 @@ body::before{
 <body>
 
 <div class="header animate">
-  <div class="logo-container">
+  <div>
     <div class="logo-coin" id="logoCoin">
       <img src="logo-tabasom.png" alt="لوگو تبسم" class="logo-front" onerror="this.parentElement.style.display='none'">
     </div>
@@ -198,15 +198,10 @@ function animate(time) {
   
   if (elapsed < PAUSE_DURATION) {
     coin.style.transform = 'rotateY(0deg)';
-    coin.style.filter = 'drop-shadow(0 4px 12px rgba(200,168,78,.2))';
   } else {
     const spinProgress = (elapsed - PAUSE_DURATION) / SPIN_DURATION;
     angle = spinProgress * 360;
     coin.style.transform = `rotateY(${angle}deg)`;
-    // Dynamic shadow based on angle for depth
-    const shadowX = Math.sin(angle * Math.PI / 180) * 8;
-    const shadowBlur = 12 + Math.abs(Math.cos(angle * Math.PI / 180)) * 10;
-    coin.style.filter = `drop-shadow(${shadowX}px 4px ${shadowBlur}px rgba(200,168,78,.35))`;
   }
   
   requestAnimationFrame(animate);
