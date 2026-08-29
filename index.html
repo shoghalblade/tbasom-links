@@ -36,8 +36,8 @@ body::before{
 .header h1{font-size:1.4rem;font-weight:700;color:var(--gold);margin-bottom:4px}
 .header p{font-size:.85rem;color:var(--text-muted)}
 
-.logo{width:120px;height:auto;display:block;margin:0 auto 16px;animation:spin3d 10s ease-in-out infinite;transform-style:preserve-3d;transform-origin:center center}
-@keyframes spin3d{from{transform:rotateY(0deg)}to{transform:rotateY(360deg)}}
+.logo{width:150px;height:auto;display:block;margin:0 auto 16px;animation:spin3d 10s linear infinite;transform-style:preserve-3d;transform-origin:center center}
+@keyframes spin3d{0%{transform:rotateY(0deg)}80%{transform:rotateY(360deg)}100%{transform:rotateY(360deg)}}
 
 .section-title{
   max-width:420px;width:100%;margin:28px 0 12px;
