@@ -32,12 +32,33 @@ body::before{
   pointer-events:none;z-index:0;
 }
 
-.header{text-align:center;margin:40px 0 10px;position:relative;z-index:1;perspective:800px}
+.header{text-align:center;margin:40px 0 10px;position:relative;z-index:1}
 .header h1{font-size:1.4rem;font-weight:700;color:var(--gold);margin-bottom:4px}
-.header p{font-size:.85rem;color:var(--text-muted)}
 
-.logo{width:150px;height:auto;display:block;margin:0 auto 16px;animation:spin3d 12s ease infinite;transform-style:preserve-3d;transform-origin:center center}
-@keyframes spin3d{0%,83%{transform:rotateY(0deg)}100%{transform:rotateY(360deg)}}
+/* ── 3D Logo ── */
+.logo-container{
+  width:150px;height:150px;margin:0 auto 16px;
+  perspective:600px;position:relative;
+}
+.logo-coin{
+  width:100%;height:100%;position:relative;
+  transform-style:preserve-3d;
+}
+.logo-coin img{
+  width:100%;height:100%;object-fit:contain;
+  position:absolute;top:0;left:0;
+  backface-visibility:hidden;
+}
+.logo-coin .logo-back{
+  transform:rotateY(180deg);
+  filter:brightness(0.7) sepia(1) hue-rotate(10deg) saturate(2);
+}
+.logo-edge{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  border-radius:50%;
+  background:linear-gradient(135deg,#b8942f,#8a6d1f);
+  transform:translateZ(-6px);
+}
 
 .section-title{
   max-width:420px;width:100%;margin:28px 0 12px;
@@ -101,7 +122,13 @@ body::before{
 <body>
 
 <div class="header animate">
-  <div style="perspective:500px;display:inline-block"><img src="logo-tabasom.png" alt="لوگو تبسم" class="logo" onerror="this.style.display='none'"></div>
+  <div class="logo-container">
+    <div class="logo-coin" id="logoCoin">
+      <div class="logo-edge"></div>
+      <img src="logo-tabasom.png" alt="لوگو تبسم" class="logo-front" onerror="this.parentElement.style.display='none'">
+      <img src="logo-tabasom.png" alt="" class="logo-back">
+    </div>
+  </div>
   <h1>دندانپزشکی تبسم</h1>
 </div>
 
@@ -171,6 +198,35 @@ body::before{
 </div>
 
 <div class="footer animate delay-8">دندانپزشکی تبسم</div>
+
+<script>
+// 3D coin spin: stay still 10s, spin 7s, repeat
+const coin = document.getElementById('logoCoin');
+let angle = 0;
+let spinning = false;
+let lastTime = 0;
+const SPIN_DURATION = 7000; // 7 seconds spin
+const PAUSE_DURATION = 10000; // 10 seconds still
+const TOTAL = SPIN_DURATION + PAUSE_DURATION;
+
+function animate(time) {
+  if (!lastTime) lastTime = time;
+  const elapsed = (time - lastTime) % TOTAL;
+  
+  if (elapsed < PAUSE_DURATION) {
+    // Still phase
+    coin.style.transform = 'rotateY(0deg)';
+  } else {
+    // Spin phase
+    const spinProgress = (elapsed - PAUSE_DURATION) / SPIN_DURATION;
+    angle = spinProgress * 360;
+    coin.style.transform = `rotateY(${angle}deg)`;
+  }
+  
+  requestAnimationFrame(animate);
+}
+requestAnimationFrame(animate);
+</script>
 
 </body>
 </html>
