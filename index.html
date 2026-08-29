@@ -37,7 +37,7 @@ body::before{
 
 /* ── 3D Logo ── */
 .logo-container{
-  width:80px;height:80px;margin:0 auto 16px;
+  width:60px;height:60px;margin:0 auto 16px;
   perspective:600px;position:relative;
 }
 .logo-coin{width:100%;height:100%;position:relative;transform-style:preserve-3d}
@@ -90,7 +90,7 @@ body::before{
   border:1px solid rgba(200,168,78,.15);border-radius:var(--radius);
   position:relative;z-index:1;
 }
-.doctor-photo{width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);flex-shrink:0}
+.doctor-photo{width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);flex-shrink:0}
 .doctor-info{display:flex;flex-direction:column;gap:4px}
 .doctor-name{font-size:.95rem;font-weight:700;color:var(--gold)}
 .doctor-desc{font-size:.78rem;color:var(--text-muted);line-height:1.7}
@@ -108,9 +108,7 @@ body::before{
 
 <div class="header animate">
   <div>
-    <div class="logo-coin" id="logoCoin">
-      <img src="logo-tabasom.png" alt="لوگو تبسم" class="logo-front" onerror="this.parentElement.style.display='none'">
-    </div>
+    <canvas id="coinCanvas" width="200" height="200" style="width:60px;height:60px;display:block;margin:0 auto 16px"></canvas>
   </div>
   <h1>دندانپزشکی تبسم</h1>
 </div>
@@ -183,30 +181,99 @@ body::before{
 <div class="footer animate delay-8">دندانپزشکی تبسم</div>
 
 <script>
-// 3D coin spin: stay still 10s, spin 7s, repeat
-const coin = document.getElementById('logoCoin');
-let angle = 0;
-let spinning = false;
+// 3D coin with canvas - thickness visible during rotation
+const canvas = document.getElementById('coinCanvas');
+const ctx = canvas.getContext('2d');
+const img = new Image();
+img.src = 'logo-tabasom.png';
 let lastTime = 0;
-const SPIN_DURATION = 7000; // 7 seconds spin
-const PAUSE_DURATION = 10000; // 10 seconds still
+const SPIN_DURATION = 7000;
+const PAUSE_DURATION = 10000;
 const TOTAL = SPIN_DURATION + PAUSE_DURATION;
+const THICKNESS = 12; // coin edge thickness in canvas px
+
+img.onload = function() { requestAnimationFrame(animate); };
+
+function drawCoin(angle) {
+  const w = canvas.width, h = canvas.height;
+  const cx = w / 2, cy = h / 2;
+  const r = w / 2 - 4;
+  
+  ctx.clearRect(0, 0, w, h);
+  
+  const rad = angle * Math.PI / 180;
+  const cosA = Math.cos(rad);
+  const sinA = Math.sin(rad);
+  
+  // Draw edge (thickness) when rotating
+  if (Math.abs(sinA) > 0.05) {
+    const edgeWidth = Math.abs(sinA) * THICKNESS;
+    const edgeX = cx + cosA * r;
+    
+    // Edge color (dark gold)
+    ctx.save();
+    ctx.beginPath();
+    if (sinA > 0) {
+      // Right edge visible
+      ctx.ellipse(cx, cy, r, r, 0, -Math.PI/2, Math.PI/2, false);
+      ctx.ellipse(cx + edgeWidth * 0.3, cy, r, r, 0, Math.PI/2, -Math.PI/2, false);
+    } else {
+      // Left edge visible
+      ctx.ellipse(cx, cy, r, r, 0, Math.PI/2, -Math.PI/2, false);
+      ctx.ellipse(cx - edgeWidth * 0.3, cy, r, r, 0, -Math.PI/2, Math.PI/2, false);
+    }
+    ctx.closePath();
+    ctx.fillStyle = '#8a6d1f';
+    ctx.fill();
+    ctx.restore();
+  }
+  
+  // Draw back face when flipped (>90 and <270)
+  const showBack = (angle % 360 > 90 && angle % 360 < 270);
+  
+  if (showBack) {
+    // Back face - mirrored logo
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.clip();
+    ctx.translate(w, 0);
+    ctx.scale(-1, 1);
+    ctx.globalAlpha = 0.6;
+    ctx.filter = 'brightness(0.5) sepia(1) hue-rotate(10deg)';
+    ctx.drawImage(img, cx - r, cy - r, r * 2, r * 2);
+    ctx.restore();
+  } else {
+    // Front face
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.clip();
+    ctx.drawImage(img, cx - r, cy - r, r * 2, r * 2);
+    ctx.restore();
+  }
+  
+  // Circle border
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, Math.PI * 2);
+  ctx.strokeStyle = 'rgba(200,168,78,0.3)';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+}
 
 function animate(time) {
   if (!lastTime) lastTime = time;
   const elapsed = (time - lastTime) % TOTAL;
   
   if (elapsed < PAUSE_DURATION) {
-    coin.style.transform = 'rotateY(0deg)';
+    drawCoin(0);
   } else {
     const spinProgress = (elapsed - PAUSE_DURATION) / SPIN_DURATION;
-    angle = spinProgress * 360;
-    coin.style.transform = `rotateY(${angle}deg)`;
+    drawCoin(spinProgress * 360);
   }
   
   requestAnimationFrame(animate);
 }
-requestAnimationFrame(animate);
 </script>
 
 </body>
