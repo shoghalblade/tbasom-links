@@ -40,25 +40,10 @@ body::before{
   width:150px;height:150px;margin:0 auto 16px;
   perspective:600px;position:relative;
 }
-.logo-coin{
-  width:100%;height:100%;position:relative;
-  transform-style:preserve-3d;
-}
-.logo-coin img{
-  width:100%;height:100%;object-fit:contain;
-  position:absolute;top:0;left:0;
-  backface-visibility:hidden;
-}
-.logo-coin .logo-back{
-  transform:rotateY(180deg);
-  filter:brightness(0.7) sepia(1) hue-rotate(10deg) saturate(2);
-}
-.logo-edge{
-  position:absolute;top:0;left:0;width:100%;height:100%;
-  border-radius:50%;
-  background:linear-gradient(135deg,#b8942f,#8a6d1f);
-  transform:translateZ(-6px);
-}
+.logo-coin{width:100%;height:100%;position:relative;transform-style:preserve-3d}
+
+
+
 
 .section-title{
   max-width:420px;width:100%;margin:28px 0 12px;
@@ -124,9 +109,7 @@ body::before{
 <div class="header animate">
   <div class="logo-container">
     <div class="logo-coin" id="logoCoin">
-      <div class="logo-edge"></div>
       <img src="logo-tabasom.png" alt="لوگو تبسم" class="logo-front" onerror="this.parentElement.style.display='none'">
-      <img src="logo-tabasom.png" alt="" class="logo-back">
     </div>
   </div>
   <h1>دندانپزشکی تبسم</h1>
@@ -214,13 +197,16 @@ function animate(time) {
   const elapsed = (time - lastTime) % TOTAL;
   
   if (elapsed < PAUSE_DURATION) {
-    // Still phase
     coin.style.transform = 'rotateY(0deg)';
+    coin.style.filter = 'drop-shadow(0 4px 12px rgba(200,168,78,.2))';
   } else {
-    // Spin phase
     const spinProgress = (elapsed - PAUSE_DURATION) / SPIN_DURATION;
     angle = spinProgress * 360;
     coin.style.transform = `rotateY(${angle}deg)`;
+    // Dynamic shadow based on angle for depth
+    const shadowX = Math.sin(angle * Math.PI / 180) * 8;
+    const shadowBlur = 12 + Math.abs(Math.cos(angle * Math.PI / 180)) * 10;
+    coin.style.filter = `drop-shadow(${shadowX}px 4px ${shadowBlur}px rgba(200,168,78,.35))`;
   }
   
   requestAnimationFrame(animate);
