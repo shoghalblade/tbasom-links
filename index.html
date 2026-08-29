@@ -32,7 +32,7 @@ body::before{
   pointer-events:none;z-index:0;
 }
 
-.header{text-align:center;margin:40px 0 10px;position:relative;z-index:1}.header 
+.header{text-align:center;margin:40px 0 10px;position:relative;z-index:1;perspective:600px}.header 
 
 
 .logo{width:180px;height:auto;max-width:180px;margin:0 auto;display:block;animation:spin 8s linear infinite}
@@ -106,7 +106,7 @@ body::before{
 .footer{margin-top:40px;text-align:center;font-size:.7rem;color:var(--text-muted);position:relative;z-index:1}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes spin{from{transform:rotateY(0deg)}to{transform:rotateY(360deg)}}
 .animate{animation:fadeUp .5s ease both}
 .delay-1{animation-delay:.05s}.delay-2{animation-delay:.1s}.delay-3{animation-delay:.15s}
 .delay-4{animation-delay:.2s}.delay-5{animation-delay:.25s}.delay-6{animation-delay:.3s}
