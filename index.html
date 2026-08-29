@@ -184,15 +184,17 @@ body::before{
 // 3D coin with canvas - thickness visible during rotation
 const canvas = document.getElementById('coinCanvas');
 const ctx = canvas.getContext('2d');
-const img = new Image();
-img.src = 'logo-tabasom.png';
+const coinImg = new Image();
+coinImg.crossOrigin = 'anonymous';
+coinImg.src = 'logo-tabasom.png';
 let lastTime = 0;
 const SPIN_DURATION = 7000;
 const PAUSE_DURATION = 10000;
 const TOTAL = SPIN_DURATION + PAUSE_DURATION;
-const THICKNESS = 12; // coin edge thickness in canvas px
+const THICKNESS = 12;
 
-img.onload = function() { requestAnimationFrame(animate); };
+coinImg.onload = function() { requestAnimationFrame(animate); };
+coinImg.onerror = function() { console.log('Logo failed to load'); };
 
 function drawCoin(angle) {
   const w = canvas.width, h = canvas.height;
@@ -241,7 +243,7 @@ function drawCoin(angle) {
     ctx.scale(-1, 1);
     ctx.globalAlpha = 0.6;
     ctx.filter = 'brightness(0.5) sepia(1) hue-rotate(10deg)';
-    ctx.drawImage(img, cx - r, cy - r, r * 2, r * 2);
+    ctx.drawImage(coinImg, cx - r, cy - r, r * 2, r * 2);
     ctx.restore();
   } else {
     // Front face
@@ -249,7 +251,7 @@ function drawCoin(angle) {
     ctx.beginPath();
     ctx.arc(cx, cy, r, 0, Math.PI * 2);
     ctx.clip();
-    ctx.drawImage(img, cx - r, cy - r, r * 2, r * 2);
+    ctx.drawImage(coinImg, cx - r, cy - r, r * 2, r * 2);
     ctx.restore();
   }
   
